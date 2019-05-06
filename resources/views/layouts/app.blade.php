@@ -21,11 +21,41 @@
     @yield("estilos")
 </head>
 <body>
+    <style>
+    /* HIDE RADIO */
+    
+    [type=radio] { 
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    /* IMAGE STYLES */
+    
+    [type=radio] + img {
+      cursor: pointer;
+    }
+    
+    /* CHECKED STYLES */
+    
+    [type=radio]:checked + img {
+      outline: 2px solid #f00;
+    }
+    
+</style>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                
+               
+                <a class="navbar-brand">
                     Home
+                    @if(isset(Auth::user()->userType) && user()->userType  == "Admin")
+                        <script>window.location = "/adminPanel";</script>
+                        @else
+                         <script>window.location = "/";</script>
+                    @endif
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
