@@ -5,7 +5,6 @@
   <title>Challenge!</title>
 </head>
 <style>
-
     /* HIDE RADIO */
     
     [type=radio] { 
@@ -27,7 +26,6 @@
       outline: 2px solid #f00;
     }
     
-
 </style>
 <body>
     @if(Auth::user()->userType == "Admin")
@@ -39,33 +37,34 @@
         @else
 
     @foreach($userResponses as $response)
-        @if($response->QuestionID == $challenges[$id]->QuestionID && $response->UserID == Auth::user()->id)
-            <script>window.location = "/{{Request::segment(1)}}/{{$id+2}}"</script>
+        @if($response->QuestionID == $challenges[$id]->id && $response->UserID == Auth::user()->id)
+            <script>window.location = "/{{Request::segment(1)}}/{{$id+1}}"</script>
 
         @endif
     @endforeach
 
         <h1> {{$challenges[$id]->QuestionText}} </h1>
+        <img src = "{{asset("img/questions/" . $challenges[$id]->ImgLocation)}}" <br>
 
         <form action="/{{Request::segment(1)}}" method="POST">
             {{ csrf_field() }}
             
                <div>    
                    <label>
-                        <input type="radio" name="option" value="{{$challenges[$id]->ImgLocation}}"> 
-                        <img src = "{{asset("img/questions/" . $challenges[$id]->ImgLocation)}}" <br> 
+                        <input type="radio" name="option" value="Yes"> 
+                        <img src = "{{asset("img/yes.png")}}" <br> 
                     </label>                  
                 
                     <label>
-                        <input type="radio" name="option" value=" {{$challenges[$id+1]->ImgLocation}}">
-                        <img src = "{{asset("img/questions/" . $challenges[$id+1]->ImgLocation)}}"
+                        <input type="radio" name="option" value="No">
+                        <img src = "{{asset("img/no.png")}}"
                     </label>
                 </div>
 
                 <input type="hidden" value="{{Auth::user()->id}}" name="user_id" />
                 <input type="hidden" value="{{$id}}" name="challenge_id" />
             <div>
-                <button type="submit" class="btn btn-template-main" >Actualizar</button>
+                <button type="submit" class="btn btn-template-main" >Submit</button>
                    
             </div>
         </form>
@@ -76,13 +75,12 @@
         <br>
 
         @if($id >= 2)
-        <a href="/{{Request::segment(1)}}/{{$id-2}}"><button type="button" class="btn btn-xs btn-info" >Anterior</button></a>
+        <a href="/{{Request::segment(1)}}/{{$id-1}}"><button type="button" class="btn btn-xs btn-info" >Back</button></a>
         @endif
         @if($id < (count($challenges) - 1))
-        <a href="/{{Request::segment(1)}}/{{$id+2}}"><button type="button" class="btn btn-xs btn-info" >Siguiente</button></a>
+        <a href="/{{Request::segment(1)}}/{{$id+1}}"><button type="button" class="btn btn-xs btn-info" >Next</button></a>
         @endif
     @endif
       
     </div>
 </body>
-</html>

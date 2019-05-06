@@ -1,3 +1,4 @@
+@extends ('layouts.app')
 @extends('challengeLayout')
 
 @section('title')
